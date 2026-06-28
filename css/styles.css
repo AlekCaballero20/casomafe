@@ -316,7 +316,6 @@ blockquote, .cipher-box, .poem-card, .testimonies {
 }
 .mini-stage h4 { margin: 0; font-size: 1.2rem; font-family: var(--serif); }
 .mini-stage.spinning { opacity: .35; transform: rotate(-3deg) scale(.96); }
-.oracle-quote { font-family: var(--serif); font-style: italic; font-size: 1.15rem; margin: 0; }
 .mini-card .secondary-button { margin-top: auto; }
 
 .ghost-button {

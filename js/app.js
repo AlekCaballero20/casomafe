@@ -324,17 +324,6 @@ function setupRoulette() {
   });
 }
 
-function setupOracle() {
-  const button = document.querySelector('[data-oracle-btn]');
-  const card = document.querySelector('[data-oracle-card]');
-  if (!button || !card || !MINI.oracle) return;
-  let last = null;
-  button.addEventListener('click', () => {
-    last = pickRandom(MINI.oracle, last);
-    card.innerHTML = `<p class="oracle-quote">“${last}”</p>`;
-  });
-}
-
 function setupMafeResponde() {
   const button = document.querySelector('[data-mafe-btn]');
   const card = document.querySelector('[data-mafe-card]');
@@ -403,7 +392,6 @@ function setupAwards() {
 
 function initMinijuegos() {
   setupRoulette();
-  setupOracle();
   setupMafeResponde();
   setupDetecta();
   setupAwards();
