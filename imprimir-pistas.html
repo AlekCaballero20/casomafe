@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pistas imprimibles · El Caso Mafe</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      background: #fff7ed;
+    }
+
+    .print-wrap {
+      width: min(1080px, calc(100vw - 2rem));
+      margin: 0 auto;
+      padding: 2rem 0 4rem;
+    }
+
+    .print-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .print-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1rem;
+    }
+
+    .clue-card {
+      min-height: 21rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 2px dashed rgba(143,79,70,0.35);
+    }
+
+    .clue-card h2 {
+      font-size: 2rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .clue-code {
+      display: inline-flex;
+      align-self: flex-start;
+      margin-top: 1rem;
+      padding: 0.65rem 0.9rem;
+      border-radius: 0.8rem;
+      background: rgba(109,139,116,0.12);
+      color: #416a4b;
+      font-weight: 900;
+    }
+
+    .host-guide table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 1rem;
+    }
+
+    .host-guide th,
+    .host-guide td {
+      padding: 0.8rem;
+      border-bottom: 1px solid rgba(78,54,45,0.16);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .host-guide th {
+      background: rgba(143,79,70,0.1);
+      color: #8f4f46;
+    }
+
+    .screen {
+      display: block;
+    }
+
+    @media print {
+      .print-header button,
+      .main-nav,
+      .topbar {
+        display: none;
+      }
+
+      .print-wrap {
+        width: 100%;
+        padding: 0;
+      }
+
+      .print-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .clue-card {
+        page-break-inside: avoid;
+        box-shadow: none;
+      }
+
+      .host-guide {
+        page-break-before: always;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="print-wrap">
+    <header class="print-header">
+      <div>
+        <p class="eyebrow">Material imprimible</p>
+        <h1 style="font-size:clamp(3rem,8vw,5rem)">El Caso Mafe</h1>
+        <p>Recorta estas pistas y escóndelas en la casa según la guía del anfitrión.</p>
+      </div>
+      <button class="primary" onclick="window.print()">Imprimir pistas</button>
+    </header>
+
+    <section class="paper">
+      <h2>Instrucciones rápidas</h2>
+      <ol class="nice-list">
+        <li>Imprime estas tarjetas.</li>
+        <li>Recorta cada evidencia.</li>
+        <li>Esconde cada tarjeta en el lugar sugerido.</li>
+        <li>La familia debe encontrar la tarjeta y escribir el código en la app.</li>
+        <li>No muestres la guía del anfitrión a los participantes. La gracia es que haya misterio, no copia con descaro.</li>
+      </ol>
+    </section>
+
+    <section>
+      <div class="section-title compact">
+        <h2>Tarjetas para esconder</h2>
+      </div>
+      <div id="clueCards" class="print-grid"></div>
+    </section>
+
+    <section class="host-guide paper">
+      <p class="eyebrow">Solo anfitrión</p>
+      <h2>Guía de montaje y respuestas</h2>
+      <div id="hostGuide"></div>
+    </section>
+  </div>
+
+  <script src="data.js"></script>
+  <script>
+    const DATA = window.MAFE_CASE_DATA;
+
+    document.getElementById("clueCards").innerHTML = DATA.escapeRooms.map(room => `
+      <article class="paper clue-card">
+        <div>
+          <p class="eyebrow">Evidencia ${room.number}</p>
+          <h2>${room.title}</h2>
+          <p><strong>Mensaje encontrado:</strong></p>
+          <p>${room.hiddenCard}</p>
+          <p><strong>Misión:</strong> ${room.task}</p>
+        </div>
+        <div class="clue-code">Código: ${room.code}</div>
+      </article>
+    `).join("");
+
+    document.getElementById("hostGuide").innerHTML = `
+      <table>
+        <thead>
+          <tr>
+            <th>Evidencia</th>
+            <th>Lugar sugerido</th>
+            <th>Objeto</th>
+            <th>Código</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${DATA.escapeRooms.map(room => `
+            <tr>
+              <td>${room.number} · ${room.title}</td>
+              <td>${room.location}</td>
+              <td>${room.physicalObject}</td>
+              <td><strong>${room.code}</strong></td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    `;
+  </script>
+</body>
+</html>

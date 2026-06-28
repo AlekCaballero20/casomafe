@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>El Caso Mafe · Expediente 24/06/67</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="topbar" id="top">
+    <a class="brand" href="#inicio" aria-label="Ir al inicio">
+      <span class="brand-mark">MF</span>
+      <span>
+        <strong>El Caso Mafe</strong>
+        <small>Expediente 24/06/67</small>
+      </span>
+    </a>
+    <nav class="main-nav" aria-label="Navegación principal">
+      <a href="#inicio">Inicio</a>
+      <a href="#salas">Salas</a>
+      <a href="#escape-room">Escape Room</a>
+      <a href="#quiz">Quiz</a>
+      <a href="#minijuegos">Más juegos</a>
+      <a href="#final" data-final-link hidden>Final</a>
+      <button class="print-button" type="button" data-print>Imprimir pistas</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero section" id="inicio">
+      <div class="hero-copy reveal">
+        <span class="eyebrow">Caso abierto</span>
+        <h1>El Caso<br>Mafe</h1>
+        <p class="date-line">Expediente 24/06/67</p>
+        <p class="lead">Una serie de pistas apareció en la casa. Todas conducen a una persona: <strong>María Fernanda Leal Pulido</strong>. La familia deberá desbloquear recuerdos, códigos, testimonios y homenajes.</p>
+
+        <div class="access-card" data-access-card>
+          <label for="access-code"><strong>Código de acceso al expediente</strong></label>
+          <div class="input-row">
+            <input id="access-code" inputmode="numeric" autocomplete="off" maxlength="6" aria-describedby="access-feedback">
+            <button type="button" data-check-access>Abrir expediente</button>
+          </div>
+          <p class="feedback" id="access-feedback" aria-live="polite"></p>
+        </div>
+
+        <div class="hero-actions">
+          <a class="primary-link locked-link" href="#escape-room" data-requires-access>Entrar a la investigación</a>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal delay-1" aria-hidden="true">
+        <img src="assets/case-board.svg" alt="">
+      </div>
+    </section>
+
+    <section class="section intro-grid" id="salas">
+      <article class="panel reveal">
+        <span class="eyebrow">La misión</span>
+        <h2>Encontrar la última página</h2>
+        <p>El caso no consiste en salir de una habitación. Consiste en resolver quién escondió la última página del expediente familiar. Cada sala desbloquea una faceta de Mafe: lectora, profesora, abogada, escritora, mamá y detective.</p>
+      </article>
+      <article class="panel reveal delay-1">
+        <span class="eyebrow">Modo familiar</span>
+        <h2>La casa como escena</h2>
+        <p>La familia participa como testigos, guardianes de pistas y sospechosos. Las pistas impresas se esconden en comedor, sobre negro, espejo, cojín morado y nevera.</p>
+      </article>
+      <article class="panel reveal delay-2">
+        <span class="eyebrow">Nivel</span>
+        <h2>Difícil, pero justo</h2>
+        <p>Los acertijos mezclan lógica, tildes, cifrado Vigenère, lectura de márgenes, puntuación legal y deducción testimonial. Nada de relleno, porque Mafe no vino a hacer sopas de letras decorativas.</p>
+      </article>
+    </section>
+
+    <section class="section dossier" aria-labelledby="dossier-title">
+      <div class="section-head reveal">
+        <span class="eyebrow">Archivo central</span>
+        <h2 id="dossier-title">Expediente de sospechosos</h2>
+        <p>Cuatro facetas custodian la verdad. Una de ellas tiene la última página.</p>
+      </div>
+      <div class="suspect-grid">
+        <article class="suspect reveal">
+          <span class="suspect-icon">📚</span>
+          <h3>La Lectora</h3>
+          <p>Conoce las pistas que se esconden entre líneas.</p>
+        </article>
+        <article class="suspect reveal delay-1">
+          <span class="suspect-icon">✒️</span>
+          <h3>La Escritora</h3>
+          <p>Sabe que una historia importante nunca se cierra a la fuerza.</p>
+        </article>
+        <article class="suspect reveal delay-2">
+          <span class="suspect-icon">⚖️</span>
+          <h3>La Abogada</h3>
+          <p>No acepta un veredicto sin revisar las pruebas.</p>
+        </article>
+        <article class="suspect reveal delay-3">
+          <span class="suspect-icon">📝</span>
+          <h3>La Profe</h3>
+          <p>Detecta errores que otros llaman detalles.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section game-shell locked" id="escape-room" data-locked-section>
+      <div class="locked-overlay" data-locked-overlay>
+        <div>
+          <span class="eyebrow">Acceso restringido</span>
+          <h2>El expediente aún está cerrado</h2>
+          <p>Ingresa el código de acceso en el inicio para abrir la investigación.</p>
+        </div>
+      </div>
+
+      <div class="section-head reveal">
+        <span class="eyebrow">Escape room</span>
+        <h2>Cadena de pistas</h2>
+        <p>Resuelve las pruebas en orden. Cada respuesta abre el siguiente capítulo.</p>
+      </div>
+
+      <div class="progress-wrap" aria-label="Progreso de la investigación">
+        <div class="progress-track"><span data-progress-bar></span></div>
+        <p><strong data-progress-count>0</strong> de 7 capítulos resueltos</p>
+      </div>
+
+      <div class="puzzle-list" data-puzzle-list>
+        <article class="puzzle-card open" data-puzzle="1">
+          <div class="puzzle-header">
+            <span>Capítulo I</span>
+            <h3>Las cuatro facetas</h3>
+          </div>
+          <p>Cuatro facetas de una misma mujer estuvieron presentes la noche en que desapareció la última página: La Lectora, La Profe, La Abogada y La Escritora.</p>
+          <details>
+            <summary>Leer pistas del expediente</summary>
+            <ol>
+              <li>La Lectora tenía el número 24 y no salió de la biblioteca.</li>
+              <li>La Escritora llevaba el libro, pero no estuvo ni en la biblioteca ni en el comedor.</li>
+              <li>La Abogada tenía la llave y el número que representa los capítulos cumplidos por Mafe.</li>
+              <li>El sello no lo tenía ni la Escritora ni la Abogada.</li>
+              <li>Quien estuvo en el comedor tenía el número 67.</li>
+              <li>La Profe no tenía ni la pluma ni el libro.</li>
+            </ol>
+          </details>
+          <label>¿Dónde está la faceta que tiene el sello?</label>
+          <div class="input-row"><input data-answer-input autocomplete="off"><button type="button" data-submit-answer>Validar</button></div>
+          <p class="feedback" aria-live="polite"></p>
+        </article>
+
+        <article class="puzzle-card" data-puzzle="2">
+          <div class="puzzle-header">
+            <span>Capítulo II</span>
+            <h3>Las tildes perdidas</h3>
+          </div>
+          <p>Corrige únicamente las palabras que deberían llevar tilde. Luego toma la primera letra de cada palabra corregida, en orden.</p>
+          <blockquote>El buho era el ultimo guardián del caso. Dijo que si: el corazon de una familia se parece al de un angel, entonces el sabado no es una jornada cualquiera. En la orbita de los recuerdos, una brujula señala rapido hacia la Etica: todo numero, toda epoca, toda gramatica, toda razon y todo oceano terminan volviendo a casa.</blockquote>
+          <label>Mensaje oculto</label>
+          <div class="input-row"><input data-answer-input autocomplete="off"><button type="button" data-submit-answer>Validar</button></div>
+          <p class="feedback" aria-live="polite"></p>
+        </article>
+
+        <article class="puzzle-card" data-puzzle="3">
+          <div class="puzzle-header">
+            <span>Capítulo III</span>
+            <h3>El apellido cifrado</h3>
+          </div>
+          <p>César no basta. Este mensaje necesita una clave más íntima. La clave es un apellido que también significa una virtud.</p>
+          <div class="cipher-box">XMRLOITCLWDPWISAPNO</div>
+          <details>
+            <summary>Ayuda técnica</summary>
+            <p>Usa cifrado Vigenère. Repite la clave hasta completar el texto y descifra restando la clave.</p>
+          </details>
+          <label>Mensaje descifrado</label>
+          <div class="input-row"><input data-answer-input autocomplete="off"><button type="button" data-submit-answer>Validar</button></div>
+          <p class="feedback" aria-live="polite"></p>
+        </article>
+
+        <article class="puzzle-card" data-puzzle="4">
+          <div class="puzzle-header">
+            <span>Capítulo IV</span>
+            <h3>Los márgenes hablan</h3>
+          </div>
+          <p>Una buena lectora no solo mira el centro de la página. A veces, la verdad está en los márgenes.</p>
+          <div class="poem-card">
+            <p><strong>C</strong>uando la verdad se esconde, las palabras dejan migas.</p>
+            <p><strong>O</strong>tra mirada descubre lo que la prisa no ve.</p>
+            <p><strong>J</strong>amás subestimes una letra al comienzo.</p>
+            <p><strong>I</strong>ncluso el silencio puede estar escribiendo.</p>
+            <p><strong>N</strong>inguna historia familiar se entiende de frente solamente.</p>
+            <p><strong>M</strong>afe sabe que leer también es sospechar.</p>
+            <p><strong>O</strong>rdenar pistas es una forma de amar la verdad.</p>
+            <p><strong>R</strong>ecordar también puede ser una investigación.</p>
+            <p><strong>A</strong>mar exige memoria.</p>
+            <p><strong>D</strong>efender lo justo exige paciencia.</p>
+            <p><strong>O</strong>bservar bien es el primer acto de justicia.</p>
+          </div>
+          <label>Lugar revelado</label>
+          <div class="input-row"><input data-answer-input autocomplete="off"><button type="button" data-submit-answer>Validar</button></div>
+          <p class="feedback" aria-live="polite"></p>
+        </article>
+
+        <article class="puzzle-card" data-puzzle="5">
+          <div class="puzzle-header">
+            <span>Capítulo V</span>
+            <h3>Una coma cambia el destino</h3>
+          </div>
+          <p>Como abogada y profesora, sabes que una coma puede cambiar un destino. Puntúa la sentencia y deduce el lugar.</p>
+          <blockquote>No busques en la sala busca donde la casa guarda el frio no la memoria</blockquote>
+          <label>¿Dónde se conserva una verdad fría?</label>
+          <div class="input-row"><input data-answer-input autocomplete="off"><button type="button" data-submit-answer>Validar</button></div>
+          <p class="feedback" aria-live="polite"></p>
+        </article>
+
+        <article class="puzzle-card" data-puzzle="6">
+          <div class="puzzle-header">
+            <span>Capítulo VI</span>
+            <h3>Los números del expediente</h3>
+          </div>
+          <p>La última cerradura se abre con biografía. Toma el día completo, ignora el mes y toma los dos últimos números del año.</p>
+          <label>Código de cuatro cifras</label>
+          <div class="input-row"><input data-answer-input inputmode="numeric" maxlength="4" autocomplete="off"><button type="button" data-submit-answer>Validar</button></div>
+          <p class="feedback" aria-live="polite"></p>
+        </article>
+
+        <article class="puzzle-card" data-puzzle="7">
+          <div class="puzzle-header">
+            <span>Capítulo VII</span>
+            <h3>¿Quién tiene la última página?</h3>
+          </div>
+          <p>Lee los testimonios y dicta el veredicto.</p>
+          <div class="testimonies">
+            <p><strong>La Lectora:</strong> Yo no tomé la página. Solo seguí las palabras hasta donde me llevaron.</p>
+            <p><strong>La Profe:</strong> La página tenía errores, pero no eran de ortografía. Eran de memoria.</p>
+            <p><strong>La Abogada:</strong> Nadie puede ser declarado culpable sin escuchar primero a la autora.</p>
+            <p><strong>La Escritora:</strong> No se puede robar algo que todavía no ha sido escrito.</p>
+          </div>
+          <label>Nombre de quien debe escribir la última página</label>
+          <div class="input-row"><input data-answer-input autocomplete="off"><button type="button" data-submit-answer>Validar</button></div>
+          <p class="feedback" aria-live="polite"></p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section quiz" id="quiz">
+      <div class="section-head reveal">
+        <span class="eyebrow">Juego familiar</span>
+        <h2>¿Quién conoce más a Mafe?</h2>
+        <p>Un quiz corto para jugar antes o después del escape room. La tecnología: botones. La civilización llegó hasta ahí.</p>
+      </div>
+      <div class="quiz-card reveal" data-quiz>
+        <div class="quiz-topline">
+          <span data-quiz-step>Pregunta 1 de 7</span>
+          <span>Puntaje: <strong data-quiz-score>0</strong></span>
+        </div>
+        <h3 data-quiz-question></h3>
+        <div class="quiz-options" data-quiz-options></div>
+        <p class="feedback" data-quiz-feedback aria-live="polite"></p>
+        <button class="secondary-button" type="button" data-quiz-next>Siguiente pregunta</button>
+      </div>
+    </section>
+
+    <section class="section minijuegos" id="minijuegos">
+      <div class="section-head reveal">
+        <span class="eyebrow">Sala de estar del expediente</span>
+        <h2>Más juegos para la reunión</h2>
+        <p>Para jugar antes, durante o después del caso. Sin códigos, sin candados: solo risas, recuerdos y alguna confesión familiar.</p>
+      </div>
+
+      <div class="mini-grid">
+        <article class="panel mini-card reveal" data-mini="ruleta">
+          <span class="mini-icon" aria-hidden="true">🎲</span>
+          <h3>Ruleta de interrogatorio</h3>
+          <p>Gira y responde. El que caiga en la pregunta, habla.</p>
+          <div class="mini-stage" data-ruleta-card>
+            <p>Pulsa girar para empezar el interrogatorio.</p>
+          </div>
+          <button class="secondary-button" type="button" data-ruleta-spin>Girar la ruleta</button>
+        </article>
+
+        <article class="panel mini-card reveal delay-1" data-mini="oraculo">
+          <span class="mini-icon" aria-hidden="true">✨</span>
+          <h3>Oráculo de Mafe</h3>
+          <p>Frases sabias, familiares y ligeramente peligrosas.</p>
+          <div class="mini-stage" data-oracle-card>
+            <p>Consulta al oráculo para recibir su sentencia.</p>
+          </div>
+          <button class="secondary-button" type="button" data-oracle-btn>Consultar el oráculo</button>
+        </article>
+
+        <article class="panel mini-card reveal delay-2" data-mini="responde">
+          <span class="mini-icon" aria-hidden="true">🎙️</span>
+          <h3>Mafe responde</h3>
+          <p>Preguntas para que ella cuente historias. Pásenle el micrófono.</p>
+          <div class="mini-stage" data-mafe-card>
+            <p>Saca una pregunta y dásela a Mafe.</p>
+          </div>
+          <button class="secondary-button" type="button" data-mafe-btn>Nueva pregunta</button>
+        </article>
+      </div>
+
+      <article class="panel detecta-panel reveal" data-mini="detecta">
+        <span class="mini-icon" aria-hidden="true">🔍</span>
+        <h3>Mafe Detecta</h3>
+        <p>Memoricen la escena. Algo va a desaparecer. ¿Quién lo nota primero, aparte de Mafe?</p>
+        <div class="detecta-board">
+          <div>
+            <h4 data-detecta-title>Escena</h4>
+            <ul data-detecta-list class="detecta-list"></ul>
+          </div>
+          <div class="detecta-controls">
+            <button class="secondary-button" type="button" data-detecta-hide>Ocultar un objeto</button>
+            <button class="ghost-button" type="button" data-detecta-new>Otra escena</button>
+            <div data-detecta-question class="detecta-question" hidden>
+              <p>¿Qué objeto desapareció?</p>
+              <div class="detecta-options" data-detecta-options></div>
+            </div>
+            <p class="feedback" data-detecta-feedback aria-live="polite"></p>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel awards-panel reveal" data-mini="awards">
+        <span class="mini-icon" aria-hidden="true">🏆</span>
+        <h3>Mafe Awards</h3>
+        <p>Premios para leer en voz alta durante la celebración.</p>
+        <div class="awards-grid" data-awards-grid></div>
+      </article>
+    </section>
+
+    <section class="section final-section" id="final" data-final-section hidden>
+      <div class="final-card reveal">
+        <span class="eyebrow">Caso cerrado</span>
+        <h2>La última página</h2>
+        <p>Esta página no estaba perdida. Estaba esperando a que Mafe la escribiera.</p>
+        <div class="final-letter">
+          <p>Porque nadie puede cerrar el expediente de una vida como la suya desde afuera. Una vida de palabras, enseñanza, amor, exigencia, verdad y familia.</p>
+          <p>Hoy no vino a escapar de una habitación. Vino a descubrir que cada persona en esta casa guarda una pista de lo mucho que ha significado.</p>
+          <p><strong>¡Feliz cumpleaños, Mafe!</strong> Que esta nueva vuelta al sol venga llena de salud, risas, recuerdos por escribir y todo el amor que tú nos has dado.</p>
+          <p><strong>Caso cerrado. Pero tu historia continúa.</strong></p>
+        </div>
+        <button class="print-button" type="button" data-print>Imprimir pistas</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Diseñado para María Fernanda Leal Pulido · 24 de junio · Caso Mafe</p>
+  </footer>
+
+  <section class="print-pack" aria-hidden="true">
+    <article class="print-card">
+      <h2>Carta inicial</h2>
+      <p><strong>Expediente MAFE · Caso: La última página desaparecida</strong></p>
+      <p>Estimada detective María Fernanda Leal Pulido: Durante años, una historia ha sido escrita en silencio. No con tinta solamente, sino con clases, consejos, libros, conversaciones, exigencias, abrazos, correcciones, decisiones justas y amor del bueno.</p>
+      <p>Hoy, esa historia presenta una irregularidad: la última página ha desaparecido. Para cerrar este caso necesitarás leer con atención, sospechar de lo evidente, corregir lo incorrecto y recordar que la verdad casi nunca grita: suele esconderse entre líneas.</p>
+    </article>
+    <article class="print-card"><h2>Capítulo I · Las cuatro facetas</h2><ol><li>La Lectora tenía el número 24 y no salió de la biblioteca.</li><li>La Escritora llevaba el libro, pero no estuvo ni en la biblioteca ni en el comedor.</li><li>La Abogada tenía la llave y el número que representa los capítulos cumplidos por Mafe.</li><li>El sello no lo tenía ni la Escritora ni la Abogada.</li><li>Quien estuvo en el comedor tenía el número 67.</li><li>La Profe no tenía ni la pluma ni el libro.</li></ol></article>
+    <article class="print-card"><h2>Capítulo II · Las tildes perdidas</h2><p>Corrige únicamente las palabras que deberían llevar tilde. Luego toma la primera letra de cada palabra corregida, en orden.</p><p>El buho era el ultimo guardián del caso. Dijo que si: el corazon de una familia se parece al de un angel, entonces el sabado no es una jornada cualquiera. En la orbita de los recuerdos, una brujula señala rapido hacia la Etica: todo numero, toda epoca, toda gramatica, toda razon y todo oceano terminan volviendo a casa.</p></article>
+    <article class="print-card"><h2>Capítulo III · El apellido cifrado</h2><p>César no basta. Este mensaje necesita una clave más íntima. La clave es un apellido que también significa una virtud.</p><p class="big-code">XMRLOITCLWDPWISAPNO</p></article>
+    <article class="print-card"><h2>Capítulo IV · Los márgenes hablan</h2><p><strong>C</strong>uando la verdad se esconde, las palabras dejan migas.</p><p><strong>O</strong>tra mirada descubre lo que la prisa no ve.</p><p><strong>J</strong>amás subestimes una letra al comienzo.</p><p><strong>I</strong>ncluso el silencio puede estar escribiendo.</p><p><strong>N</strong>inguna historia familiar se entiende de frente solamente.</p><p><strong>M</strong>afe sabe que leer también es sospechar.</p><p><strong>O</strong>rdenar pistas es una forma de amar la verdad.</p><p><strong>R</strong>ecordar también puede ser una investigación.</p><p><strong>A</strong>mar exige memoria.</p><p><strong>D</strong>efender lo justo exige paciencia.</p><p><strong>O</strong>bservar bien es el primer acto de justicia.</p></article>
+    <article class="print-card"><h2>Capítulo V · Una coma cambia el destino</h2><p>Como abogada y profesora, sabes que una coma puede cambiar un destino. Puntúa la sentencia y deduce el lugar.</p><p class="big-code">No busques en la sala busca donde la casa guarda el frio no la memoria</p></article>
+    <article class="print-card"><h2>Capítulo VI · Los números del expediente</h2><p>La última cerradura se abre con biografía.</p><p>Regla 1: toma el día completo. Regla 2: ignora el mes. Regla 3: toma los dos últimos números del año.</p></article>
+    <article class="print-card"><h2>Capítulo VII · Testimonios</h2><p><strong>La Lectora:</strong> Yo no tomé la página. Solo seguí las palabras hasta donde me llevaron.</p><p><strong>La Profe:</strong> La página tenía errores, pero no eran de ortografía. Eran de memoria.</p><p><strong>La Abogada:</strong> Nadie puede ser declarado culpable sin escuchar primero a la autora.</p><p><strong>La Escritora:</strong> No se puede robar algo que todavía no ha sido escrito.</p></article>
+    <article class="print-card certificate"><h2>Certificado oficial</h2><p>El Tribunal Familiar de los Misterios Importantes declara que María Fernanda Leal Pulido ha resuelto con éxito el caso de la última página.</p><p>También queda demostrado, más allá de toda duda razonable, que la investigadora es culpable de amar profundamente, enseñar con carácter, defender la verdad, escribir con belleza, cuidar a su familia y dejar huella.</p><p><strong>Sentencia:</strong> recibir amor, abrazos, gratitud, celebración y una nueva página para seguir escribiendo su historia.</p><p>Firmas de testigos:</p><p>______________________________</p><p>______________________________</p><p>______________________________</p></article>
+  </section>
+
+  <script src="data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
