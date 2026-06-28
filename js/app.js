@@ -22,86 +22,16 @@ const puzzleSuccess = {
 };
 
 const quizQuestions = [
-  {
-    question: 'Mafe entra a una reunión familiar donde algo claramente pasó. ¿Cuánto tarda en darse cuenta?',
-    options: [
-      'Necesita que alguien se lo cuente con detalles',
-      'Ya lo sabía desde antes de entrar',
-      'Lo nota a los tres días',
-      'Jamás se entera, vive en su mundo'
-    ],
-    answer: 1
-  },
-  {
-    question: 'Si Mafe descubre que le ocultaron algo "para no preocuparla", ¿qué dolería más?',
-    options: [
-      'El asunto en sí',
-      'Que gastaran su plata',
-      'Que no le avisaran a tiempo',
-      'Nada, lo olvida enseguida'
-    ],
-    answer: 2
-  },
-  {
-    question: 'Llega un regalo de cumpleaños. ¿Cuál la conmueve de verdad?',
-    options: [
-      'El más caro de la mesa',
-      'Una carta o un detalle pensado',
-      'Un electrodoméstico "porque servía"',
-      'Un mensaje reenviado de buenos días'
-    ],
-    answer: 1
-  },
-  {
-    question: 'Su apellido Leal esconde una virtud. ¿Cuál de estas la describe mejor a ELLA?',
-    options: [
-      'Puntualidad alemana',
-      'Indiferencia elegante',
-      'Lealtad a los suyos',
-      'Suerte en la lotería'
-    ],
-    answer: 2
-  },
-  {
-    question: 'Alguien dice una mentira piadosa en la mesa. ¿Qué hace Mafe?',
-    options: [
-      'No se da cuenta de nada',
-      'La aplaude por creativa',
-      'Se calla, pero su cara ya dictó sentencia',
-      'Llama a un abogado de verdad'
-    ],
-    answer: 2
-  },
-  {
-    question: 'En una sola palabra, ¿qué es Mafe para esta familia?',
-    options: [
-      'Un trámite',
-      'Hogar',
-      'El comité de quejas',
-      'La WiFi de la casa'
-    ],
-    answer: 1
-  },
-  {
-    question: '¿Cuál sería el lema perfecto de la agencia detectivesca de Mafe?',
-    options: [
-      'Eso se veía venir',
-      'Yo no observo nada',
-      'Después lo investigamos',
-      'Asumamos y ya'
-    ],
-    answer: 0
-  },
-  {
-    question: 'Final del caso: ¿qué merece recibir Mafe hoy?',
-    options: [
-      'Un formulario más para llenar',
-      'Amor, abrazos y una nueva página por escribir',
-      'Una reunión con acta y firma',
-      'Silencio incómodo'
-    ],
-    answer: 1
-  }
+  '¿Cuál crees que es el recuerdo de infancia que Mafe más atesora?',
+  'Si Mafe pudiera repetir un solo día completo de su vida, ¿cuál crees que elegiría y por qué?',
+  '¿Cuál es el plato o la receta que Mafe hace (o pide) que para ti nadie le gana?',
+  '¿Qué canción crees que pondría Mafe para bailar sin pena un día feliz?',
+  'En tu opinión, ¿cuál ha sido la decisión más valiente de la vida de Mafe?',
+  '¿De qué se siente orgullosa de su familia, aunque casi nunca lo diga en voz alta?',
+  'Si Mafe escribiera un libro sobre su vida, ¿qué título crees que le pondría?',
+  '¿Qué lugar del mundo crees que Mafe sueña con conocer, o al que le encantaría volver?',
+  '¿Cuál es la costumbre o manía más "muy Mafe" que todos en esta familia reconocemos?',
+  '¿Qué consejo suyo crees que vas a recordar toda la vida?'
 ];
 
 let state = loadState();
@@ -214,6 +144,14 @@ const QUIZ_STORAGE_KEY = 'el-caso-mafe-quiz-v1';
 let quizPlayers = loadQuizPlayers();
 let quizSession = null; // { name, index, answers: [] }
 
+function escapeHtml(text) {
+  return String(text)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
 function loadQuizPlayers() {
   try {
     const saved = JSON.parse(localStorage.getItem(QUIZ_STORAGE_KEY));
@@ -244,7 +182,7 @@ function renderQuizRoster() {
     roster.innerHTML = `<p class="quiz-roster-title">Ya respondieron (${quizPlayers.length}):</p>` +
       '<ul class="quiz-roster-list">' +
       quizPlayers.map((player, i) =>
-        `<li><span>🕵️ ${player.name}</span><button type="button" class="quiz-remove" data-quiz-remove="${i}" aria-label="Quitar a ${player.name}">✕</button></li>`
+        `<li><span>🕵️ ${escapeHtml(player.name)}</span><button type="button" class="quiz-remove" data-quiz-remove="${i}" aria-label="Quitar a ${escapeHtml(player.name)}">✕</button></li>`
       ).join('') +
       '</ul>';
   }
@@ -274,36 +212,28 @@ function startQuizPlayer() {
 }
 
 function renderQuizQuestion() {
-  const question = quizQuestions[quizSession.index];
   const step = document.querySelector('[data-quiz-step]');
   const playerLabel = document.querySelector('[data-quiz-player-label]');
   const title = document.querySelector('[data-quiz-question]');
-  const options = document.querySelector('[data-quiz-options]');
+  const answerInput = document.querySelector('[data-quiz-answer]');
   const nextButton = document.querySelector('[data-quiz-next]');
 
   step.textContent = `Pregunta ${quizSession.index + 1} de ${quizQuestions.length}`;
   playerLabel.textContent = `Responde: ${quizSession.name}`;
-  title.textContent = question.question;
-  options.innerHTML = '';
-  nextButton.disabled = true;
-  nextButton.textContent = quizSession.index === quizQuestions.length - 1 ? 'Guardar respuestas' : 'Siguiente';
+  title.textContent = quizQuestions[quizSession.index];
 
-  question.options.forEach((option, index) => {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.textContent = option;
-    button.addEventListener('click', () => {
-      options.querySelectorAll('button').forEach(b => b.classList.remove('chosen'));
-      button.classList.add('chosen');
-      quizSession.answers[quizSession.index] = index;
-      nextButton.disabled = false;
-    });
-    options.appendChild(button);
-  });
+  answerInput.value = quizSession.answers[quizSession.index] || '';
+  nextButton.disabled = answerInput.value.trim() === '';
+  nextButton.textContent = quizSession.index === quizQuestions.length - 1 ? 'Guardar respuestas' : 'Siguiente';
+  answerInput.focus();
 }
 
 function nextQuizQuestion() {
-  if (!quizSession || quizSession.answers[quizSession.index] === undefined) return;
+  const answerInput = document.querySelector('[data-quiz-answer]');
+  if (!quizSession) return;
+  const value = String(answerInput.value || '').trim();
+  if (value === '') return;
+  quizSession.answers[quizSession.index] = value;
   quizSession.index += 1;
 
   if (quizSession.index >= quizQuestions.length) {
@@ -328,16 +258,13 @@ function renderQuizCompare() {
 
   body.innerHTML = quizQuestions.map((question, qi) => {
     const rows = quizPlayers.map(player => {
-      const choice = player.answers[qi];
-      const text = choice === undefined ? '—' : question.options[choice];
-      const isSuggested = choice === question.answer;
-      return `<li><strong>${player.name}:</strong> ${text}${isSuggested ? ' <span class="quiz-tip">💡</span>' : ''}</li>`;
+      const text = player.answers[qi] ? escapeHtml(player.answers[qi]) : '<em>—</em>';
+      return `<li><strong>${escapeHtml(player.name)}:</strong> ${text}</li>`;
     }).join('');
     return `
       <article class="quiz-compare-card">
-        <h4>${qi + 1}. ${question.question}</h4>
+        <h4>${qi + 1}. ${question}</h4>
         <ul>${rows}</ul>
-        <p class="quiz-suggestion">💡 Sugerencia de la app: ${question.options[question.answer]}</p>
       </article>`;
   }).join('');
 }
@@ -349,11 +276,21 @@ function initQuiz() {
   const backButton = document.querySelector('[data-quiz-back]');
   const resetButton = document.querySelector('[data-quiz-reset-all]');
   const input = document.querySelector('#quiz-player');
+  const answerInput = document.querySelector('[data-quiz-answer]');
   if (!startButton) return;
 
   startButton.addEventListener('click', startQuizPlayer);
   input?.addEventListener('keydown', event => {
     if (event.key === 'Enter') startQuizPlayer();
+  });
+  answerInput?.addEventListener('input', () => {
+    nextButton.disabled = answerInput.value.trim() === '';
+  });
+  answerInput?.addEventListener('keydown', event => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      nextQuizQuestion();
+    }
   });
   nextButton?.addEventListener('click', nextQuizQuestion);
   compareButton?.addEventListener('click', () => {

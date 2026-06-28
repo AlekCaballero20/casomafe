@@ -224,17 +224,6 @@ blockquote, .cipher-box, .poem-card, .testimonies {
 .quiz { max-width: 1040px; margin: 0 auto; }
 .quiz-card { padding: clamp(1.3rem, 4vw, 2.4rem); }
 .quiz-topline { display: flex; justify-content: space-between; gap: 1rem; color: var(--muted); font-weight: 800; margin-bottom: 1rem; }
-.quiz-options { display: grid; gap: .7rem; margin: 1.1rem 0; }
-.quiz-options button {
-  width: 100%;
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  background: rgba(255,255,255,.67);
-  padding: 1rem;
-  text-align: left;
-}
-.quiz-options button.correct { border-color: rgba(62,111,70,.45); background: rgba(62,111,70,.12); }
-.quiz-options button.wrong { border-color: rgba(156,63,54,.45); background: rgba(156,63,54,.11); }
 
 .final-section { max-width: 1060px; margin: 0 auto; }
 .final-card { padding: clamp(1.5rem, 5vw, 3rem); text-align: center; }
@@ -375,12 +364,26 @@ blockquote, .cipher-box, .poem-card, .testimonies {
 }
 .quiz-remove:hover { background: rgba(167, 93, 82, .12); }
 
-.quiz-options button.chosen {
+.quiz-answer-input {
+  width: 100%;
+  margin: 1rem 0;
+  padding: 1rem 1.1rem;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, .8);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 1.05rem;
+  line-height: 1.5;
+  resize: vertical;
+}
+.quiz-answer-input:focus {
+  outline: none;
   border-color: var(--clay);
-  background: rgba(167, 93, 82, .14);
-  font-weight: 700;
+  box-shadow: 0 0 0 3px rgba(167, 93, 82, .15);
 }
 [data-quiz-player-label] { color: var(--clay-dark); font-weight: 700; }
+.quiz-compare-card li em { color: var(--muted); }
 
 .quiz-compare { display: grid; gap: 1rem; margin: 1rem 0; }
 .quiz-compare-card {
@@ -392,5 +395,3 @@ blockquote, .cipher-box, .poem-card, .testimonies {
 .quiz-compare-card h4 { margin: 0 0 .6rem; font-size: 1.05rem; }
 .quiz-compare-card ul { list-style: none; padding: 0; margin: 0 0 .6rem; display: grid; gap: .35rem; }
 .quiz-compare-card li { padding: .2rem 0; }
-.quiz-tip { font-size: .9rem; }
-.quiz-suggestion { margin: 0; color: var(--muted); font-size: .9rem; font-style: italic; }
