@@ -243,17 +243,43 @@
       <div class="section-head reveal">
         <span class="eyebrow">Juego familiar</span>
         <h2>¿Quién conoce más a Mafe?</h2>
-        <p>La familia responde y <strong>Mafe es la jueza</strong>: ella confirma en voz alta si la respuesta es verdad. La app dice cuál creemos que es la correcta… pero la última palabra la tiene la cumpleañera.</p>
+        <p>Cada familiar escribe su nombre y responde. Las respuestas se guardan, y al final se comparan todas para que <strong>Mafe diga quién tuvo la razón</strong>. La última palabra la tiene la cumpleañera.</p>
       </div>
       <div class="quiz-card reveal" data-quiz>
-        <div class="quiz-topline">
-          <span data-quiz-step>Pregunta 1 de 7</span>
-          <span>Puntaje: <strong data-quiz-score>0</strong></span>
+        <!-- Pantalla: registrar jugador -->
+        <div data-quiz-screen="setup">
+          <label for="quiz-player"><strong>Nombre del jugador</strong></label>
+          <div class="input-row">
+            <input id="quiz-player" autocomplete="off" maxlength="24" placeholder="Escribe tu nombre">
+            <button type="button" data-quiz-start>Responder</button>
+          </div>
+          <div class="quiz-roster" data-quiz-roster></div>
+          <div class="quiz-setup-actions">
+            <button class="secondary-button" type="button" data-quiz-compare hidden>Comparar respuestas</button>
+          </div>
         </div>
-        <h3 data-quiz-question></h3>
-        <div class="quiz-options" data-quiz-options></div>
-        <p class="feedback" data-quiz-feedback aria-live="polite"></p>
-        <button class="secondary-button" type="button" data-quiz-next>Siguiente pregunta</button>
+
+        <!-- Pantalla: respondiendo -->
+        <div data-quiz-screen="playing" hidden>
+          <div class="quiz-topline">
+            <span data-quiz-step></span>
+            <span data-quiz-player-label></span>
+          </div>
+          <h3 data-quiz-question></h3>
+          <div class="quiz-options" data-quiz-options></div>
+          <button class="secondary-button" type="button" data-quiz-next disabled>Siguiente</button>
+        </div>
+
+        <!-- Pantalla: comparar -->
+        <div data-quiz-screen="compare" hidden>
+          <h3>Comparen las respuestas</h3>
+          <p>Mafe lee cada pregunta y declara, en voz alta, quién acertó. La 💡 es solo una sugerencia de la app.</p>
+          <div class="quiz-compare" data-quiz-compare-body></div>
+          <div class="quiz-setup-actions">
+            <button class="secondary-button" type="button" data-quiz-back>Volver a jugadores</button>
+            <button class="ghost-button" type="button" data-quiz-reset-all>Borrar todo</button>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -289,7 +315,7 @@
       <article class="panel awards-panel reveal" data-mini="awards">
         <span class="mini-icon" aria-hidden="true">🏆</span>
         <h3>Mafe Awards</h3>
-        <p>Cinco premios, uno por cada miembro de la familia. Cada persona toma uno y se lo entrega a Mafe leyéndolo en voz alta.</p>
+        <p>Cuatro premios, uno por cada familiar (Mafe es la homenajeada). Cada persona toma uno y se lo entrega a Mafe leyéndolo en voz alta.</p>
         <div class="awards-grid" data-awards-grid></div>
       </article>
     </section>

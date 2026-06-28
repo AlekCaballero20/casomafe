@@ -105,9 +105,6 @@ const quizQuestions = [
 ];
 
 let state = loadState();
-let currentQuiz = 0;
-let quizScore = 0;
-let quizLocked = false;
 
 function loadState() {
   try {
@@ -208,87 +205,174 @@ function submitPuzzle(card) {
   }
 }
 
-function renderQuiz() {
-  const question = quizQuestions[currentQuiz];
+/* ----------------------------------------------------------
+   Quiz multijugador: cada familiar responde con su nombre,
+   las respuestas se guardan en localStorage y al final se
+   comparan para que Mafe declare quién tuvo la razón.
+---------------------------------------------------------- */
+const QUIZ_STORAGE_KEY = 'el-caso-mafe-quiz-v1';
+let quizPlayers = loadQuizPlayers();
+let quizSession = null; // { name, index, answers: [] }
+
+function loadQuizPlayers() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(QUIZ_STORAGE_KEY));
+    return Array.isArray(saved) ? saved : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveQuizPlayers() {
+  localStorage.setItem(QUIZ_STORAGE_KEY, JSON.stringify(quizPlayers));
+}
+
+function showQuizScreen(name) {
+  document.querySelectorAll('[data-quiz-screen]').forEach(screen => {
+    screen.hidden = screen.dataset.quizScreen !== name;
+  });
+}
+
+function renderQuizRoster() {
+  const roster = document.querySelector('[data-quiz-roster]');
+  const compareButton = document.querySelector('[data-quiz-compare]');
+  if (!roster) return;
+
+  if (!quizPlayers.length) {
+    roster.innerHTML = '<p class="quiz-roster-empty">Aún no hay jugadores. Sé el primero en responder.</p>';
+  } else {
+    roster.innerHTML = `<p class="quiz-roster-title">Ya respondieron (${quizPlayers.length}):</p>` +
+      '<ul class="quiz-roster-list">' +
+      quizPlayers.map((player, i) =>
+        `<li><span>🕵️ ${player.name}</span><button type="button" class="quiz-remove" data-quiz-remove="${i}" aria-label="Quitar a ${player.name}">✕</button></li>`
+      ).join('') +
+      '</ul>';
+  }
+
+  if (compareButton) compareButton.hidden = quizPlayers.length < 1;
+
+  roster.querySelectorAll('[data-quiz-remove]').forEach(button => {
+    button.addEventListener('click', () => {
+      quizPlayers.splice(Number(button.dataset.quizRemove), 1);
+      saveQuizPlayers();
+      renderQuizRoster();
+    });
+  });
+}
+
+function startQuizPlayer() {
+  const input = document.querySelector('#quiz-player');
+  const name = String(input.value || '').trim();
+  if (!name) {
+    input.focus();
+    return;
+  }
+  quizSession = { name, index: 0, answers: [] };
+  input.value = '';
+  showQuizScreen('playing');
+  renderQuizQuestion();
+}
+
+function renderQuizQuestion() {
+  const question = quizQuestions[quizSession.index];
   const step = document.querySelector('[data-quiz-step]');
-  const score = document.querySelector('[data-quiz-score]');
+  const playerLabel = document.querySelector('[data-quiz-player-label]');
   const title = document.querySelector('[data-quiz-question]');
   const options = document.querySelector('[data-quiz-options]');
-  const feedback = document.querySelector('[data-quiz-feedback]');
   const nextButton = document.querySelector('[data-quiz-next]');
 
-  step.textContent = `Pregunta ${currentQuiz + 1} de ${quizQuestions.length}`;
-  score.textContent = quizScore;
+  step.textContent = `Pregunta ${quizSession.index + 1} de ${quizQuestions.length}`;
+  playerLabel.textContent = `Responde: ${quizSession.name}`;
   title.textContent = question.question;
-  feedback.textContent = '';
-  feedback.className = 'feedback';
   options.innerHTML = '';
   nextButton.disabled = true;
-  quizLocked = false;
+  nextButton.textContent = quizSession.index === quizQuestions.length - 1 ? 'Guardar respuestas' : 'Siguiente';
 
   question.options.forEach((option, index) => {
     const button = document.createElement('button');
     button.type = 'button';
     button.textContent = option;
-    button.addEventListener('click', () => chooseQuizOption(button, index));
+    button.addEventListener('click', () => {
+      options.querySelectorAll('button').forEach(b => b.classList.remove('chosen'));
+      button.classList.add('chosen');
+      quizSession.answers[quizSession.index] = index;
+      nextButton.disabled = false;
+    });
     options.appendChild(button);
   });
 }
 
-function chooseQuizOption(button, index) {
-  if (quizLocked) return;
-  quizLocked = true;
-
-  const question = quizQuestions[currentQuiz];
-  const feedback = document.querySelector('[data-quiz-feedback]');
-  const score = document.querySelector('[data-quiz-score]');
-  const nextButton = document.querySelector('[data-quiz-next]');
-
-  document.querySelectorAll('[data-quiz-options] button').forEach((optionButton, optionIndex) => {
-    if (optionIndex === question.answer) optionButton.classList.add('correct');
-  });
-
-  if (index === question.answer) {
-    quizScore += 1;
-    score.textContent = quizScore;
-    feedback.textContent = 'Correcto. La familia conserva algo de esperanza.';
-    feedback.className = 'feedback good';
-  } else {
-    button.classList.add('wrong');
-    feedback.textContent = 'Respuesta sospechosa. El tribunal familiar toma nota.';
-    feedback.className = 'feedback bad';
-  }
-
-  nextButton.disabled = false;
-}
-
 function nextQuizQuestion() {
-  currentQuiz += 1;
-  if (currentQuiz >= quizQuestions.length) {
-    const title = document.querySelector('[data-quiz-question]');
-    const options = document.querySelector('[data-quiz-options]');
-    const feedback = document.querySelector('[data-quiz-feedback]');
-    const nextButton = document.querySelector('[data-quiz-next]');
-    document.querySelector('[data-quiz-step]').textContent = 'Resultado final';
-    title.textContent = `Puntaje final: ${quizScore} de ${quizQuestions.length}`;
-    options.innerHTML = '';
-    feedback.textContent = quizScore >= 5 ? 'El equipo conoce bien a Mafe. Caso digno.' : 'El equipo necesita entrevistar más a la protagonista, qué cosa tan humana.';
-    feedback.className = 'feedback good';
-    nextButton.textContent = 'Reiniciar quiz';
-    nextButton.disabled = false;
-    nextButton.onclick = resetQuiz;
+  if (!quizSession || quizSession.answers[quizSession.index] === undefined) return;
+  quizSession.index += 1;
+
+  if (quizSession.index >= quizQuestions.length) {
+    quizPlayers.push({ name: quizSession.name, answers: quizSession.answers });
+    saveQuizPlayers();
+    quizSession = null;
+    renderQuizRoster();
+    showQuizScreen('setup');
     return;
   }
-  renderQuiz();
+  renderQuizQuestion();
 }
 
-function resetQuiz() {
-  currentQuiz = 0;
-  quizScore = 0;
+function renderQuizCompare() {
+  const body = document.querySelector('[data-quiz-compare-body]');
+  if (!body) return;
+
+  if (!quizPlayers.length) {
+    body.innerHTML = '<p>No hay respuestas guardadas todavía.</p>';
+    return;
+  }
+
+  body.innerHTML = quizQuestions.map((question, qi) => {
+    const rows = quizPlayers.map(player => {
+      const choice = player.answers[qi];
+      const text = choice === undefined ? '—' : question.options[choice];
+      const isSuggested = choice === question.answer;
+      return `<li><strong>${player.name}:</strong> ${text}${isSuggested ? ' <span class="quiz-tip">💡</span>' : ''}</li>`;
+    }).join('');
+    return `
+      <article class="quiz-compare-card">
+        <h4>${qi + 1}. ${question.question}</h4>
+        <ul>${rows}</ul>
+        <p class="quiz-suggestion">💡 Sugerencia de la app: ${question.options[question.answer]}</p>
+      </article>`;
+  }).join('');
+}
+
+function initQuiz() {
+  const startButton = document.querySelector('[data-quiz-start]');
   const nextButton = document.querySelector('[data-quiz-next]');
-  nextButton.textContent = 'Siguiente pregunta';
-  nextButton.onclick = nextQuizQuestion;
-  renderQuiz();
+  const compareButton = document.querySelector('[data-quiz-compare]');
+  const backButton = document.querySelector('[data-quiz-back]');
+  const resetButton = document.querySelector('[data-quiz-reset-all]');
+  const input = document.querySelector('#quiz-player');
+  if (!startButton) return;
+
+  startButton.addEventListener('click', startQuizPlayer);
+  input?.addEventListener('keydown', event => {
+    if (event.key === 'Enter') startQuizPlayer();
+  });
+  nextButton?.addEventListener('click', nextQuizQuestion);
+  compareButton?.addEventListener('click', () => {
+    renderQuizCompare();
+    showQuizScreen('compare');
+  });
+  backButton?.addEventListener('click', () => {
+    renderQuizRoster();
+    showQuizScreen('setup');
+  });
+  resetButton?.addEventListener('click', () => {
+    quizPlayers = [];
+    saveQuizPlayers();
+    renderQuizRoster();
+    showQuizScreen('setup');
+  });
+
+  renderQuizRoster();
+  showQuizScreen('setup');
 }
 
 /* ----------------------------------------------------------
@@ -369,10 +453,9 @@ function init() {
     button.addEventListener('click', () => window.print());
   });
 
-  document.querySelector('[data-quiz-next]').onclick = nextQuizQuestion;
   updateAccessView();
   updatePuzzleView();
-  renderQuiz();
+  initQuiz();
   initMinijuegos();
 }
 

@@ -334,3 +334,63 @@ blockquote, .cipher-box, .poem-card, .testimonies {
 .award-card h4 { margin: .5rem 0 .4rem; font-family: var(--serif); font-size: 1.15rem; }
 .award-card p { margin: 0; color: var(--muted); }
 .award-medal { font-size: 1.6rem; }
+
+/* ----------------------------------------------------------
+   Quiz multijugador
+---------------------------------------------------------- */
+.ghost-button {
+  border: 1px solid var(--clay);
+  background: transparent;
+  color: var(--clay-dark);
+  padding: .8rem 1.05rem;
+  border-radius: 999px;
+  font-weight: 700;
+}
+.ghost-button:hover { background: rgba(167, 93, 82, .1); }
+
+.quiz-setup-actions { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 1.2rem; }
+.quiz-roster { margin-top: 1.3rem; }
+.quiz-roster-empty { color: var(--muted); font-style: italic; margin: 0; }
+.quiz-roster-title { font-weight: 700; margin: 0 0 .5rem; }
+.quiz-roster-list { list-style: none; padding: 0; margin: 0; display: grid; gap: .5rem; }
+.quiz-roster-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .6rem;
+  padding: .6rem .9rem;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, .7);
+  border: 1px solid var(--line);
+  font-weight: 600;
+}
+.quiz-remove {
+  border: 0;
+  background: transparent;
+  color: var(--clay);
+  font-size: 1rem;
+  line-height: 1;
+  padding: .2rem .4rem;
+  border-radius: 8px;
+}
+.quiz-remove:hover { background: rgba(167, 93, 82, .12); }
+
+.quiz-options button.chosen {
+  border-color: var(--clay);
+  background: rgba(167, 93, 82, .14);
+  font-weight: 700;
+}
+[data-quiz-player-label] { color: var(--clay-dark); font-weight: 700; }
+
+.quiz-compare { display: grid; gap: 1rem; margin: 1rem 0; }
+.quiz-compare-card {
+  padding: 1.1rem 1.3rem;
+  border-radius: 18px;
+  background: rgba(255, 250, 243, .9);
+  border: 1px solid var(--line);
+}
+.quiz-compare-card h4 { margin: 0 0 .6rem; font-size: 1.05rem; }
+.quiz-compare-card ul { list-style: none; padding: 0; margin: 0 0 .6rem; display: grid; gap: .35rem; }
+.quiz-compare-card li { padding: .2rem 0; }
+.quiz-tip { font-size: .9rem; }
+.quiz-suggestion { margin: 0; color: var(--muted); font-size: .9rem; font-style: italic; }

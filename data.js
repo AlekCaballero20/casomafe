@@ -219,8 +219,7 @@ window.MAFE_CASE_DATA = {
     { title: "Premio a la intuición más precisa", text: "Por saber que algo iba a pasar antes de que los demás terminaran de negarlo." },
     { title: "Premio a la memoria viva", text: "Por guardar historias, fechas, detalles y pequeñas verdades familiares." },
     { title: "Premio a la fuerza silenciosa", text: "Por sostener más de lo que muchas veces se ve." },
-    { title: "Premio a la ternura estratégica", text: "Por cuidar incluso cuando finge que no está tan pendiente." },
-    { title: "Premio a la detective del hogar", text: "Por notar pistas emocionales, objetos perdidos y cambios mínimos en la escena." }
+    { title: "Premio a la ternura estratégica", text: "Por cuidar incluso cuando finge que no está tan pendiente." }
   ],
 
   detectaScenes: [
