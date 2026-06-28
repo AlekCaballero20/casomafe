@@ -23,39 +23,84 @@ const puzzleSuccess = {
 
 const quizQuestions = [
   {
-    question: '¿Qué fecha abre el expediente MAFE?',
-    options: ['24 de junio de 1967', '24 de julio de 1967', '6 de junio de 1974'],
+    question: 'Mafe entra a una reunión familiar donde algo claramente pasó. ¿Cuánto tarda en darse cuenta?',
+    options: [
+      'Necesita que alguien se lo cuente con detalles',
+      'Ya lo sabía desde antes de entrar',
+      'Lo nota a los tres días',
+      'Jamás se entera, vive en su mundo'
+    ],
+    answer: 1
+  },
+  {
+    question: 'Si Mafe descubre que le ocultaron algo "para no preocuparla", ¿qué dolería más?',
+    options: [
+      'El asunto en sí',
+      'Que gastaran su plata',
+      'Que no le avisaran a tiempo',
+      'Nada, lo olvida enseguida'
+    ],
+    answer: 2
+  },
+  {
+    question: 'Llega un regalo de cumpleaños. ¿Cuál la conmueve de verdad?',
+    options: [
+      'El más caro de la mesa',
+      'Una carta o un detalle pensado',
+      'Un electrodoméstico "porque servía"',
+      'Un mensaje reenviado de buenos días'
+    ],
+    answer: 1
+  },
+  {
+    question: 'Su apellido Leal esconde una virtud. ¿Cuál de estas la describe mejor a ELLA?',
+    options: [
+      'Puntualidad alemana',
+      'Indiferencia elegante',
+      'Lealtad a los suyos',
+      'Suerte en la lotería'
+    ],
+    answer: 2
+  },
+  {
+    question: 'Alguien dice una mentira piadosa en la mesa. ¿Qué hace Mafe?',
+    options: [
+      'No se da cuenta de nada',
+      'La aplaude por creativa',
+      'Se calla, pero su cara ya dictó sentencia',
+      'Llama a un abogado de verdad'
+    ],
+    answer: 2
+  },
+  {
+    question: 'En una sola palabra, ¿qué es Mafe para esta familia?',
+    options: [
+      'Un trámite',
+      'Hogar',
+      'El comité de quejas',
+      'La WiFi de la casa'
+    ],
+    answer: 1
+  },
+  {
+    question: '¿Cuál sería el lema perfecto de la agencia detectivesca de Mafe?',
+    options: [
+      'Eso se veía venir',
+      'Yo no observo nada',
+      'Después lo investigamos',
+      'Asumamos y ya'
+    ],
     answer: 0
   },
   {
-    question: '¿Qué oficio representa mejor su vida profesional?',
-    options: ['Profesora de español', 'Detective privada', 'Arquitecta de interiores'],
-    answer: 0
-  },
-  {
-    question: '¿Qué tipo de historia le va perfecto para este cumpleaños?',
-    options: ['Misterio detectivesco familiar', 'Competencia de velocidad absurda', 'Manual tributario dramatizado'],
-    answer: 0
-  },
-  {
-    question: '¿Qué virtud aparece escondida en su apellido?',
-    options: ['Lealtad', 'Paciencia meteorológica', 'Caos administrativo'],
-    answer: 0
-  },
-  {
-    question: '¿Qué faceta conecta con cartas, relatos y belleza escrita?',
-    options: ['La Escritora', 'La Contrabandista de tildes', 'La Jefa de logística universal'],
-    answer: 0
-  },
-  {
-    question: '¿Qué faceta no permite cerrar un caso sin pruebas?',
-    options: ['La Abogada', 'La Nevera', 'El Cojín Morado'],
-    answer: 0
-  },
-  {
-    question: '¿Qué debe encontrar Mafe al final?',
-    options: ['La última página', 'Un formulario imposible', 'Una pista decorativa sin propósito'],
-    answer: 0
+    question: 'Final del caso: ¿qué merece recibir Mafe hoy?',
+    options: [
+      'Un formulario más para llenar',
+      'Amor, abrazos y una nueva página por escribir',
+      'Una reunión con acta y firma',
+      'Silencio incómodo'
+    ],
+    answer: 1
   }
 ];
 
