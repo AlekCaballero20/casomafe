@@ -318,53 +318,7 @@ blockquote, .cipher-box, .poem-card, .testimonies {
 .mini-stage.spinning { opacity: .35; transform: rotate(-3deg) scale(.96); }
 .mini-card .secondary-button { margin-top: auto; }
 
-.ghost-button {
-  border: 1px solid var(--clay);
-  background: transparent;
-  color: var(--clay-dark);
-  padding: .8rem 1.05rem;
-  border-radius: 999px;
-  font-weight: 700;
-}
-.ghost-button:hover { background: rgba(167, 93, 82, .1); }
-
-.detecta-panel, .awards-panel { margin-top: 1.6rem; }
-.detecta-board {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 1.6rem;
-  margin-top: 1rem;
-  align-items: start;
-}
-.detecta-list {
-  list-style: none;
-  padding: 0;
-  margin: .6rem 0 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
-  gap: .6rem;
-}
-.detecta-list li {
-  padding: .8rem;
-  text-align: center;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, .7);
-  border: 1px solid var(--line);
-  font-weight: 600;
-}
-.detecta-controls { display: flex; flex-direction: column; gap: .7rem; }
-.detecta-question p { margin: 0 0 .5rem; font-weight: 700; }
-.detecta-options { display: flex; flex-wrap: wrap; gap: .5rem; }
-.detecta-option {
-  border: 1px solid var(--line);
-  background: white;
-  padding: .6rem .9rem;
-  border-radius: 999px;
-  font-weight: 600;
-}
-.detecta-option:hover { border-color: var(--clay); }
-.detecta-option:disabled { opacity: .5; cursor: default; }
-
+.awards-panel { margin-top: 1.6rem; }
 .awards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
@@ -380,7 +334,3 @@ blockquote, .cipher-box, .poem-card, .testimonies {
 .award-card h4 { margin: .5rem 0 .4rem; font-family: var(--serif); font-size: 1.15rem; }
 .award-card p { margin: 0; color: var(--muted); }
 .award-medal { font-size: 1.6rem; }
-
-@media (max-width: 720px) {
-  .detecta-board { grid-template-columns: 1fr; }
-}

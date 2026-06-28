@@ -293,7 +293,7 @@ function resetQuiz() {
 
 /* ----------------------------------------------------------
    Minijuegos familiares (ruleta, oráculo, Mafe responde,
-   Mafe Detecta y Awards). Reutilizan el contenido de data.js.
+   y Awards). Reutilizan el contenido de data.js.
 ---------------------------------------------------------- */
 const MINI = window.MAFE_CASE_DATA || {};
 
@@ -335,53 +335,6 @@ function setupMafeResponde() {
   });
 }
 
-let detectaScene = null;
-function setupDetecta() {
-  const title = document.querySelector('[data-detecta-title]');
-  const list = document.querySelector('[data-detecta-list]');
-  const hideButton = document.querySelector('[data-detecta-hide]');
-  const newButton = document.querySelector('[data-detecta-new]');
-  const questionBox = document.querySelector('[data-detecta-question]');
-  const optionsBox = document.querySelector('[data-detecta-options]');
-  const feedback = document.querySelector('[data-detecta-feedback]');
-  if (!list || !MINI.detectaScenes) return;
-
-  function renderScene() {
-    detectaScene = pickRandom(MINI.detectaScenes, detectaScene);
-    title.textContent = detectaScene.title;
-    list.innerHTML = detectaScene.original.map(item => `<li>${item}</li>`).join('');
-    questionBox.hidden = true;
-    feedback.textContent = '';
-    feedback.className = 'feedback';
-    hideButton.disabled = false;
-  }
-
-  function hideObject() {
-    if (!detectaScene) return;
-    list.innerHTML = detectaScene.changed.map(item => `<li>${item}</li>`).join('');
-    const options = [...detectaScene.original].sort(() => Math.random() - 0.5);
-    optionsBox.innerHTML = options
-      .map(option => `<button type="button" class="detecta-option" data-answer="${option}">${option}</button>`)
-      .join('');
-    questionBox.hidden = false;
-    hideButton.disabled = true;
-    optionsBox.querySelectorAll('.detecta-option').forEach(option => {
-      option.addEventListener('click', () => {
-        const ok = option.dataset.answer === detectaScene.answer;
-        feedback.textContent = ok
-          ? '¡Correcto! Mafe aprobaría esta investigación.'
-          : 'No era ese. La escena te engañó, clásico.';
-        feedback.className = `feedback ${ok ? 'good' : 'bad'}`;
-        if (ok) optionsBox.querySelectorAll('.detecta-option').forEach(btn => btn.disabled = true);
-      });
-    });
-  }
-
-  hideButton.addEventListener('click', hideObject);
-  newButton.addEventListener('click', renderScene);
-  renderScene();
-}
-
 function setupAwards() {
   const grid = document.querySelector('[data-awards-grid]');
   if (!grid || !MINI.awards) return;
@@ -393,7 +346,6 @@ function setupAwards() {
 function initMinijuegos() {
   setupRoulette();
   setupMafeResponde();
-  setupDetecta();
   setupAwards();
 }
 
